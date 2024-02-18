@@ -1,0 +1,67 @@
+{
+  "name": "pace-hr1-uk-backend",
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/pace-hr1-uk-backend",
+        "main": "src/main.ts",
+        "tsConfig": "tsconfig.app.json",
+        "assets": [
+          "src/assets"
+        ],
+        "isolatedConfig": true,
+        "webpackConfig": "webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "pace-hr1-uk-backend:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "pace-hr1-uk-backend:build:development"
+        },
+        "production": {
+          "buildTarget": "pace-hr1-uk-backend:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "./src/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectName}"
+      ],
+      "options": {
+        "jestConfig": "jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
