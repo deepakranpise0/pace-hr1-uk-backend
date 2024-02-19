@@ -4,7 +4,7 @@
     "!**/*"
   ],
   "plugins": [
-    "@nx"
+    "@nx",
   ],
   "overrides": [
     {
@@ -13,9 +13,41 @@
         "*.tsx"
       ],
       "extends": [
-        "plugin:@nx/typescript"
+        "plugin:@nx/typescript",
+        "eslint:recommended",
+        "airbnb-base",
+        "prettier"
       ],
-      "rules": {}
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": [
+                  "*"
+                ]
+              }
+            ]
+          }
+        ],
+        "sort-exports/sort-exports": ["error", {"sortDir": "asc"}],
+        "no-underscore-dangle": "off",
+        "consistent-return": "warn",
+        "no-shadow": "warn",
+        "eqeqeq": "warn",
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "global-require": "warn",
+        "import/no-dynamic-require": "warn",
+        "import/prefer-default-export": "off",
+        "class-methods-use-this": "off",
+        "dot-notation": "warn",
+        "@typescript-eslint/return-await": "off",
+      }
     },
     {
       "files": [
