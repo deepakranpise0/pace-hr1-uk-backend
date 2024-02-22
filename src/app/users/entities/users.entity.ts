@@ -1,9 +1,6 @@
 import moment = require('moment');
 import * as mongoose from 'mongoose';
-import {
-  MASTER_DATA,
-  masterDataInterface,
-} from 'src/app/types/Types';
+import { UserInterface } from 'src/app/_types/Types';
 
 import {
   Prop,
@@ -11,23 +8,17 @@ import {
   SchemaFactory,
 } from '@nestjs/mongoose';
 
-export type RuleDocument = MasterData & mongoose.Document;
+export type RuleDocument = UsersData & mongoose.Document;
 
 @Schema()
-export class MasterData implements  masterDataInterface{
+export class UsersData implements  UserInterface{
   @Prop()
   name: string;
 
   @Prop()
-  description: string;
-
-  @Prop()
   email: string;
-
-  @Prop({ type: String, enum: Object.values(MASTER_DATA), required: true })
-  masterDataType: MASTER_DATA;
  
-  @Prop({ default: false })
+  @Prop({ default: true })
   isActive: boolean;
 
   @Prop({ default: moment().toISOString() })
@@ -46,4 +37,4 @@ export class MasterData implements  masterDataInterface{
   updatedBy: string;
 }
 
-export const MasterDataSchema = SchemaFactory.createForClass(MasterData);
+export const UserSchema = SchemaFactory.createForClass(UsersData);

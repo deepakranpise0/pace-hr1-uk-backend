@@ -9,98 +9,97 @@ import {
 } from '@nestjs/common';
 
 import {
-  CreateMasterDto,
-  GetMasterDto,
-  UpdateMasterDto,
-} from '../dtos/Dtos';
-import { masterDataInterface } from '../types/Types';
+  CreateQuestionsFeedbackDto,
+  GetQuestionsFeedbackDto,
+  UpdateQuestionsFeedbackDto,
+} from '../_dtos/Dtos';
+import { QuestionFeedbackInterface } from '../_types/Types';
 
 @Injectable()
-export class MasterService {
+export class QuestionsFeedbackService {
   constructor(
-    @Inject('MASTER_DATA_MODEL')
-    private readonly masterDataModel: Model<masterDataInterface>
+    @Inject('QUESTIONS_FEEDBACK_MODEL')
+    private readonly _QuestionFeedbackModel: Model<QuestionFeedbackInterface>
   ) { }
   
-  async createMasterData(createMasterDto: CreateMasterDto): Promise<GetMasterDto> {
-    const createMasterData = await this.masterDataModel.create(createMasterDto);
-    if (!createMasterData) {
+  async createQuestionData(CreateQuestionsFeedbackDto: CreateQuestionsFeedbackDto): Promise<GetQuestionsFeedbackDto> {
+    const createQuestionData = await this._QuestionFeedbackModel.create(CreateQuestionsFeedbackDto);
+    if (!createQuestionData) {
       throw new HttpException(
-        'Error creating Master data.',
+        'Error creating Question Feedback data.',
         HttpStatus.BAD_REQUEST
       );
     }
-    return createMasterData;
+    return createQuestionData;
   }
   
   async findAll(query: any) {
-    console.log("Master Data")
-    const params = ['masterDataType'];
+    console.log("Question Feedback Data")
+    const params = [];
     const data = await this.selectQuery(query, params);
 
-    const findAllMasterData = await this.masterDataModel
+    const findAllQuestionData = await this._QuestionFeedbackModel
       .find(data.findParams, data.projectParams, data.queryOptions)
       .lean()
       .skip(parseInt(query.skip, 10) || 0)
       .limit(parseInt(query.limit, 10) || 0);
-    if (!findAllMasterData) {
-      throw new HttpException('Master data not found.', HttpStatus.NOT_FOUND);
+    if (!findAllQuestionData) {
+      throw new HttpException('Question Feedback data not found.', HttpStatus.NOT_FOUND);
     }
-    return findAllMasterData;
+    return findAllQuestionData;
   }
 
   async findOne(id: string) {
-    const findOneDeviceType = await this.masterDataModel
+    const findOneQuestionsFeedback = await this._QuestionFeedbackModel
       .findOne({
         _id: new mongoose.Types.ObjectId(id),
         isDeleted: false,
       })
       .lean();
-    if (!findOneDeviceType) {
-      throw new HttpException('Master data not found.', HttpStatus.NOT_FOUND);
+    if (!findOneQuestionsFeedback) {
+      throw new HttpException('Question Feedback data not found.', HttpStatus.NOT_FOUND);
     }
-    return findOneDeviceType;
+    return findOneQuestionsFeedback;
   }
 
-  async update(id: string, updateMasterDto: UpdateMasterDto) {
+  async update(id: string, UpdateQuestionsFeedbackDto: UpdateQuestionsFeedbackDto) {
     const findData = await this.findOne(id);
     if (!findData) {
-      throw new HttpException('Master data not found.', HttpStatus.NOT_FOUND);
+      throw new HttpException('Question Feedback data not found.', HttpStatus.NOT_FOUND);
     } else {
-      let { description, name, isActive, email,updatedAt } = updateMasterDto;
-      description = description ? description : findData.description;
-      name = name ? name : findData.name;
-      email = email ? email : findData.email;
-      isActive = isActive? isActive: findData.isActive;
+      let { feedback,indicatorValue,isActive, updatedAt } = UpdateQuestionsFeedbackDto;
+      isActive = isActive ? isActive : findData.isActive;
+      feedback = feedback ? feedback : findData.feedback;
+      indicatorValue = indicatorValue ? indicatorValue : findData.indicatorValue;
       updatedAt = moment().toISOString();
-
-      const updatedDeviceType = await this.masterDataModel.updateOne(
-        { _id: new mongoose.Types.ObjectId(id) },
-        updateMasterDto
+      const updatedQuestionsFeedback = await this._QuestionFeedbackModel.updateOne(
+          { _id: new mongoose.Types.ObjectId(id) },
+          UpdateQuestionsFeedbackDto
       );
-      if (!updatedDeviceType) {
-        throw new HttpException(
-          'Master data update failed.',
+      
+      if (!updatedQuestionsFeedback) {
+          throw new HttpException(
+          'Question Feedback data update failed.',
           HttpStatus.BAD_REQUEST
-        );
+          );
       } else {
-        return 'Master data updated successfully.';
+          return 'Question Feedback data updated successfully.';
       }
     }
   }
 
   async remove(id: string) {
-    const removeDeviceType = await this.masterDataModel.updateOne(
+    const removeQuestionsFeedback = await this._QuestionFeedbackModel.updateOne(
       { _id: new mongoose.Types.ObjectId(id) },
       { isDeleted: true }
     );
-    if (!removeDeviceType) {
+    if (!removeQuestionsFeedback) {
       throw new HttpException(
-        'Master data deletion failed.',
+        'Question Feedback data deletion failed.',
         HttpStatus.BAD_REQUEST
       );
     } else {
-      return 'Master data deleted successfully.';
+      return 'Question Feedback data deleted successfully.';
     }
   }
 
@@ -124,7 +123,7 @@ export class MasterService {
           if (e.includes('_id')) {
             NewSubQuery[e] = new mongoose.Types.ObjectId(data.search);
             
-          } else if (e !== 'isActive' || e !== 'isDeleted') {
+          } else if (e !== 'isActive') {
             NewSubQuery[e] = { $regex: data.search, $options: 'i' };
           }
           new_query.push(NewSubQuery);
@@ -133,7 +132,7 @@ export class MasterService {
       } else {
         const searchQuery = {};
         params.forEach((param) => {
-          if (param !== 'isActive' || param !== 'isDeleted')
+          if (param !== 'isActive')
             searchQuery[param] = { $regex: data.search, $options: 'i' };
         });
         query.findParams = {

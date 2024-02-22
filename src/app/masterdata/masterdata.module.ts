@@ -3,9 +3,9 @@ import { Mongoose } from 'mongoose';
 import { Module } from '@nestjs/common';
 
 import { DatabaseModule } from '../database/database.module';
-import { MasterController } from './master_data.controller';
-import { MasterService } from './master_data.service';
-import { MasterDataSchema } from './modals/master_data.modal';
+import { MasterDataSchema } from './entities/masterdata.entity';
+import { MasterController } from './masterdata.controller';
+import { MasterService } from './masterdata.service';
 
 @Module({
   imports: [DatabaseModule],

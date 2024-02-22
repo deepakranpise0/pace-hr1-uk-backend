@@ -13,10 +13,10 @@ import {
   CreateMasterDto,
   GetMasterDto,
   UpdateMasterDto,
-} from '../dtos/Dtos';
-import { MasterService } from './master_data.service';
+} from '../_dtos/Dtos';
+import { MasterService } from './masterdata.service';
 
-@Controller('master_data')
+@Controller('masters')
 export class MasterController {
     constructor(private readonly _masterService: MasterService) {}
 
