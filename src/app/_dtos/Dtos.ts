@@ -13,10 +13,12 @@ import {
   MASTER_DATA,
   MasterDataId,
   masterDataInterface,
+  PaceEmployeeInterface,
   Question,
   QuestionFeedbackInterface,
   QuestionInterface,
   QuestionsPerSections,
+  ROLE,
   SectionDetails,
   User,
   UserInterface,
@@ -102,12 +104,10 @@ export class CreateUserDto implements UserInterface {
   @IsOptional()
   updatedBy: string;
 }
-
 export class UpdateUserDto extends CreateUserDto implements UserInterface {   
   @IsOptional()
   updatedAt:  string;
 }
-
 export class GetUserDto extends UpdateUserDto { 
   _id?: mongoose.Types.ObjectId
 }
@@ -246,16 +246,59 @@ export class CreateUserInterviewTemplateDto implements UserInterviewTemplateInte
   @IsOptional()
   updatedBy: string;
 }
-
 export class UpdateUserInterviewTemplateDto extends CreateUserInterviewTemplateDto implements UserInterviewTemplateInterface {  
   @IsOptional()
   updatedAt:  string;
 }
-
 export class GetUserInterviewTemplateDto extends UpdateUserInterviewTemplateDto { 
   _id?: mongoose.Types.ObjectId
 }
 //#EndRegion
+
+//#User
+export class CreatePaceEmployeeDto implements PaceEmployeeInterface {
+ 
+  @IsString()
+  password: string;
+  
+  @IsString()
+  name: string;
+
+  @IsString()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  role:ROLE;
+
+  @IsBoolean()
+  @IsOptional()
+  isActive: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  isDeleted: boolean;
+
+  @IsOptional()
+  createdAt: string;
+
+  @IsOptional()
+  createdBy: string;
+
+  @IsOptional()
+  updatedAt: string;
+  
+  @IsOptional()
+  updatedBy: string;
+}
+export class UpdatePaceEmployeeDto extends CreatePaceEmployeeDto implements PaceEmployeeInterface {   
+  @IsOptional()
+  updatedAt:  string;
+}
+export class GetPaceEmployeeDto extends UpdatePaceEmployeeDto { 
+  _id?: mongoose.Types.ObjectId
+}
+//#endregion  
 
 
 

@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 
 import {
@@ -14,8 +15,10 @@ import {
   GetUserInterviewTemplateDto,
   UpdateUserInterviewTemplateDto,
 } from '../_dtos/Dtos';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { UserInterviewTemplateService } from './userInterviewTemplate.service';
 
+@UseGuards(JwtAuthGuard)
 @Controller('user_interview_template')
 export class UserInterviewTemplateController {
   constructor(private readonly _UserInterviewTemplateService: UserInterviewTemplateService) { }
