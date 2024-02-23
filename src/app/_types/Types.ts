@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 export enum MASTER_DATA{
     DOMAIN="domain",
     ASSESSMENT_TYPES="assessmentType",
-    SECTIONS="sections",
+    SECTIONS="section",
     INDICATORS="indicators"
 }
 
