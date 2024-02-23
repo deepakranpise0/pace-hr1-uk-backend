@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 
 import {
@@ -14,8 +15,10 @@ import {
   GetQuestionsDto,
   UpdateQuestionsDto,
 } from '../_dtos/Dtos';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { QuestionsService } from './questions.service';
 
+@UseGuards(JwtAuthGuard)
 @Controller('questions')
 export class QuestionsController {
   constructor(private readonly _QuestionService: QuestionsService) { }

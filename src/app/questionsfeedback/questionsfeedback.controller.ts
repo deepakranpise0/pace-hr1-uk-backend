@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 
 import {
@@ -14,8 +15,10 @@ import {
   GetQuestionsFeedbackDto,
   UpdateQuestionsFeedbackDto,
 } from '../_dtos/Dtos';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { QuestionsFeedbackService } from './questionsfeedback.service';
 
+@UseGuards(JwtAuthGuard)
 @Controller('questionsFeedback')
 export class QuestionsFeedbackController {
   constructor(private readonly _QuestionFeedbackService: QuestionsFeedbackService) { }

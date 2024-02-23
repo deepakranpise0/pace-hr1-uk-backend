@@ -7,6 +7,11 @@ export enum MASTER_DATA{
     INDICATORS="indicators"
 }
 
+export enum ROLE { 
+    ADMIN = 'admin',
+    INTERVIEWER='interviewer'
+}
+
 export type QuestionsPerSections={
     questionId: Question,
     indicatorValue: MasterDataId,   
@@ -45,6 +50,21 @@ export declare interface UserInterface{
     updatedAt: string;
     updatedBy: string;
 } 
+
+export declare interface PaceEmployeeInterface{
+    _id?:mongoose.Types.ObjectId
+    name: string;
+    email: string;
+    password: string;
+    role: ROLE;
+    isActive: boolean;
+    isDeleted: boolean;
+    createdAt: string;
+    createdBy: string;
+    updatedAt: string;
+    updatedBy: string;
+}
+
 
 export declare interface QuestionInterface{
     _id?:mongoose.Types.ObjectId

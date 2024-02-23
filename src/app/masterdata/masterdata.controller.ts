@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 
 import {
@@ -14,8 +15,10 @@ import {
   GetMasterDto,
   UpdateMasterDto,
 } from '../_dtos/Dtos';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { MasterService } from './masterdata.service';
 
+@UseGuards(JwtAuthGuard)
 @Controller('masters')
 export class MasterController {
     constructor(private readonly _masterService: MasterService) {}
