@@ -1,10 +1,14 @@
 import * as bcrypt from 'bcrypt';
+import { throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { Injectable } from '@nestjs/common';
-import { JwtService, JwtSignOptions } from '@nestjs/jwt';
+import {
+  JwtService,
+  JwtSignOptions,
+} from '@nestjs/jwt';
 
 import { PaceEmployeeService } from '../paceEmployee/paceEmployee.service';
-import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +19,6 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<Boolean> {
     const query = { searchField: 'email', search: email };
     const userDetails = await this.PaceEmployeeService.findAll(query);
-    console.log(userDetails)
     if (userDetails.length > 0) {
       const isValidPassword = await bcrypt.compare(password, userDetails[0].password);
       return isValidPassword?isValidPassword:false;
@@ -31,13 +34,10 @@ export class AuthService {
       const jwtOptions: JwtSignOptions = {
         secret:environment.secretOrKey
       }
-      console.log(payload);
-      return {
-        access_token: this.jwtService.sign(payload,jwtOptions)
-      }
+      const access_token = this.jwtService.sign(payload, jwtOptions);
+      return {access_token}
     }catch(error){ 
-      console.log(error); 
-      return {access_token:''}
+      throwError("Login Failed")
     }
   }
 }
