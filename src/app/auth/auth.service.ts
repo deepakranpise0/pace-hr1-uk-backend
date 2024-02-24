@@ -31,13 +31,16 @@ export class AuthService {
     try {
       const { email } = user.body;
       const payload = { email };
+      const query = { searchField: 'email', search: email };
+      const userDetails = await this.PaceEmployeeService.findAll(query);
       const jwtOptions: JwtSignOptions = {
         secret:environment.secretOrKey
       }
+      console.log(userDetails)
       const access_token = this.jwtService.sign(payload, jwtOptions);
-      return {access_token}
+      return {access_token,role:userDetails[0].role}
     }catch(error){ 
-      throwError("Login Failed")
+      throwError("Login Failed",)
     }
   }
 }

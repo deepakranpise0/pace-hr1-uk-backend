@@ -16,13 +16,13 @@ export type RuleDocument = PaceEmployeesData & mongoose.Document;
 @Schema()
 export class PaceEmployeesData implements  PaceEmployeeInterface{
   
-  @Prop()
+  @Prop({required:true})
   name: string;
 
-  @Prop()
+  @Prop({required:true})
   password: string;
 
-  @Prop()
+  @Prop({unique:true,required:true})
   email: string;
 
   @Prop({ type: String, enum: Object.values(ROLE), required: true })

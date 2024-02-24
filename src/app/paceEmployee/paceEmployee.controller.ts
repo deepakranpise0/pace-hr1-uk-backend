@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 
 import {
@@ -14,9 +15,10 @@ import {
   GetPaceEmployeeDto,
   UpdatePaceEmployeeDto,
 } from '../_dtos/Dtos';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { PaceEmployeeService } from './paceEmployee.service';
 
-// @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 @Controller('paceemployees')
 export class PaceEmployeeController {
   constructor(private readonly _PaceEmployeeService: PaceEmployeeService) { }

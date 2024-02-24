@@ -25,20 +25,27 @@ export class PaceEmployeeService {
   ) { }
   
   async createPaceEmployeeData(createPaceEmployeeDto: CreatePaceEmployeeDto): Promise<GetPaceEmployeeDto> {
-
-    createPaceEmployeeDto.password=bcrypt.hash(createPaceEmployeeDto.password, this.saltRounds)
-    const createPaceEmployeeData = await this.PaceEmployeeModel.create(createPaceEmployeeDto);
-    if (!createPaceEmployeeData) {
-      throw new HttpException(
-        'Error creating PaceEmployee data.',
-        HttpStatus.BAD_REQUEST
-      );
+    try {
+       createPaceEmployeeDto.password=await bcrypt.hash(createPaceEmployeeDto.password, this.saltRounds)
+      const createPaceEmployeeData = await this.PaceEmployeeModel.create(createPaceEmployeeDto);
+      if (!createPaceEmployeeData) {
+        throw new HttpException(
+          'Error creating PaceEmployee data.',
+          HttpStatus.BAD_REQUEST
+        );
+      }
+      return createPaceEmployeeData;
+    } catch (error) {
+       throw new HttpException(
+          'Error creating pace employee check email id.',
+          HttpStatus.BAD_REQUEST
+        );
     }
-    return createPaceEmployeeData;
+   
   }
   
   async findAll(query: any) {
-    const params = ['name','email','password'];
+    const params = ['name','email','password','role'];
     const data = await this.selectQuery(query, params);
 
     const findAllPaceEmployeeData = await this.PaceEmployeeModel

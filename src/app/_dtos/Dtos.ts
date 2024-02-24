@@ -1,6 +1,7 @@
 import {
   IsArray,
   IsBoolean,
+  IsEmail,
   IsNotEmpty,
   IsNumber,
   IsObject,
@@ -265,6 +266,9 @@ export class CreatePaceEmployeeDto implements PaceEmployeeInterface {
   name: string;
 
   @IsString()
+  @IsEmail({}, { message: 'Invalid email format' })
+  @IsNotEmpty({ message: 'Email is required' })
+  // @IsUnique({ message: 'Email already exists' }) ://TODO : to be add
   email: string;
 
   @IsString()
