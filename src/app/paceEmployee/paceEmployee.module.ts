@@ -15,7 +15,7 @@ import { PaceEmployeeService } from './paceEmployee.service';
       {
         provide: 'PACE_EMPLOYEE_MODEL',
         useFactory: (mongoose: Mongoose) =>
-          mongoose.model('PaceEmployees', PaceEmployeeSchema),
+          mongoose.model('paceemployees', PaceEmployeeSchema),
         inject: ['DATABASE_CONNECTION'],
       },
     ]

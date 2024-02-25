@@ -18,7 +18,7 @@ import { UserInterviewTemplateService } from './userInterviewTemplate.service';
       {
         provide: 'USER_INTERVIEW_TEMPLATE_MODEL',
         useFactory: (mongoose: Mongoose) =>
-          mongoose.model('UserInterviewTemplates', UserInterviewTemplateSchema),
+          mongoose.model('userinterviewtemplates', UserInterviewTemplateSchema),
         inject: ['DATABASE_CONNECTION'],
       },
     ]

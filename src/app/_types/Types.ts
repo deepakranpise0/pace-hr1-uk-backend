@@ -12,14 +12,15 @@ export enum ROLE {
     INTERVIEWER='interviewer'
 }
 
-export type QuestionsPerSections={
-    questionId: Question,
-    indicatorValue: MasterDataId,   
+export type QuestionsPerSections = {
+    sectionId:MasterDataId
+    questionId: [Questions],
+    notes:string
 }
 
-export type SectionDetails={
-    sectionId: MasterDataId,
-    notes:string
+export type Questions={
+    questionId: MasterDataId,
+    indicator: MasterDataId, 
 }
 
 export declare interface masterDataInterface{
@@ -105,8 +106,7 @@ export declare interface UserInterviewTemplateInterface{
     userId: User;
     domainId: MasterDataId;
     assessmentId: MasterDataId,
-    sectionDetails: SectionDetails,
-    questionsPerSection: QuestionsPerSections[],
+    questionsPerSection: [QuestionsPerSections],
     overallFeedback: string,
     pdfUrlLink: string,
     isActive: boolean;

@@ -14,7 +14,7 @@ import { UserService } from './users.service';
       {
         provide: 'USER_MODEL',
         useFactory: (mongoose: Mongoose) =>
-          mongoose.model('Users', UserSchema),
+          mongoose.model('users', UserSchema),
         inject: ['DATABASE_CONNECTION'],
       },
     ]

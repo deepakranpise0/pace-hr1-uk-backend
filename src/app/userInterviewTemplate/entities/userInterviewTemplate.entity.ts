@@ -3,7 +3,6 @@ import * as mongoose from 'mongoose';
 import {
   MasterDataId,
   QuestionsPerSections,
-  SectionDetails,
   User,
   UserInterviewTemplateInterface,
 } from 'src/app/_types/Types';
@@ -18,20 +17,25 @@ export type RuleDocument = UserInterviewTemplate & mongoose.Document;
 
 @Schema()
 export class UserInterviewTemplate implements UserInterviewTemplateInterface {
-  @Prop({type:mongoose.Types.ObjectId})
+  @Prop({type:mongoose.Schema.Types.ObjectId,ref: 'users',required:true}) 
   userId: User;
 
-  @Prop({ type: mongoose.Types.ObjectId })
+  @Prop({type:mongoose.Schema.Types.ObjectId,ref: 'masterdatas',required:true})  
   domainId: MasterDataId;
 
-  @Prop({ type: mongoose.Types.ObjectId })
+  @Prop({type:mongoose.Schema.Types.ObjectId,ref: 'masterdatas',required:true})  
   assessmentId: MasterDataId;
 
-  @Prop({ type: Object })
-  sectionDetails: SectionDetails;
-
-  @Prop({ type: [] })
-  questionsPerSection: QuestionsPerSections[];
+  @Prop({
+    type: [{
+      sectionId: { type: mongoose.Schema.Types.ObjectId,ref: 'masterdatas'},
+      questionId: [{
+        questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'questions' },
+        indicator: { type: mongoose.Schema.Types.ObjectId, ref: 'masterdatas' }
+      }],
+      notes:String
+    }],required:true })
+  questionsPerSection: [QuestionsPerSections];
 
   @Prop()
   overallFeedback: string;

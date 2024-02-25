@@ -25,7 +25,7 @@ export class QuestionsFeedbackData implements QuestionFeedbackInterface {
   @Prop()
   feedback: string;
 
-  @Prop({type:String})  
+  @Prop({type: mongoose.Schema.Types.ObjectId,ref: 'masterdatas'})  
   sectionId: MasterDataId;
 
   @Prop({ default: false })

@@ -14,7 +14,7 @@ import { MasterService } from './masterdata.service';
       {
         provide: 'MASTER_DATA_MODEL',
         useFactory: (mongoose: Mongoose) =>
-          mongoose.model('MasterData', MasterDataSchema),
+          mongoose.model('masterdatas', MasterDataSchema),
         inject: ['DATABASE_CONNECTION'],
       },
     ]

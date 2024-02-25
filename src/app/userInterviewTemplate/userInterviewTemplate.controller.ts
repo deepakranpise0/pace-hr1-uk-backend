@@ -19,13 +19,13 @@ import { JwtAuthGuard } from '../auth/auth.guard';
 import { UserInterviewTemplateService } from './userInterviewTemplate.service';
 
 @UseGuards(JwtAuthGuard)
-@Controller('user_interview_template')
+@Controller('userInterviewTemplates')
 export class UserInterviewTemplateController {
   constructor(private readonly _UserInterviewTemplateService: UserInterviewTemplateService) { }
 
   @Post()
-  async createQuestionData(@Body() CreateUserInterviewTemplateDto: CreateUserInterviewTemplateDto): Promise<CreateUserInterviewTemplateDto> {
-    return this._UserInterviewTemplateService.createQuestionData(CreateUserInterviewTemplateDto);
+  async create(@Body() CreateUserInterviewTemplateDto: CreateUserInterviewTemplateDto): Promise<CreateUserInterviewTemplateDto> {
+    return this._UserInterviewTemplateService.create(CreateUserInterviewTemplateDto);
   }
 
   @Get()

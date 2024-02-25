@@ -17,6 +17,8 @@ import { QuestionFeedbackInterface } from '../_types/Types';
 
 @Injectable()
 export class QuestionsFeedbackService {
+  populateArray = [{ path: 'questionsPerSection.sectionId', select: 'name' }];
+
   constructor(
     @Inject('QUESTIONS_FEEDBACK_MODEL')
     private readonly _QuestionFeedbackModel: Model<QuestionFeedbackInterface>
@@ -40,6 +42,7 @@ export class QuestionsFeedbackService {
 
     const findAllQuestionData = await this._QuestionFeedbackModel
       .find(data.findParams, data.projectParams, data.queryOptions)
+      .populate(this.populateArray)
       .lean()
       .skip(parseInt(query.skip, 10) || 0)
       .limit(parseInt(query.limit, 10) || 0);
@@ -55,6 +58,7 @@ export class QuestionsFeedbackService {
         _id: new mongoose.Types.ObjectId(id),
         isDeleted: false,
       })
+      .populate(this.populateArray)
       .lean();
     if (!findOneQuestionsFeedback) {
       throw new HttpException('Question Feedback data not found.', HttpStatus.NOT_FOUND);
@@ -146,7 +150,6 @@ export class QuestionsFeedbackService {
       else value[data.sortBy] = 1;
       query.queryOptions = { sort: value };
     }
-    // query.findParams={ isActive:true };
     return query;
   }
 }

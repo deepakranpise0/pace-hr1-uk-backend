@@ -14,7 +14,7 @@ import { QuestionsService } from './questions.service';
       {
         provide: 'QUESTIONS_MODEL',
         useFactory: (mongoose: Mongoose) =>
-          mongoose.model('Questions', QuestionSchema),
+          mongoose.model('questions', QuestionSchema),
         inject: ['DATABASE_CONNECTION'],
       },
     ]

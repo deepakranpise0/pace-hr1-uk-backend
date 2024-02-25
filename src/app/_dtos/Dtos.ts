@@ -4,7 +4,6 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumber,
-  IsObject,
   IsOptional,
   IsString,
 } from 'class-validator';
@@ -20,7 +19,6 @@ import {
   QuestionInterface,
   QuestionsPerSections,
   ROLE,
-  SectionDetails,
   User,
   UserInterface,
   UserInterviewTemplateInterface,
@@ -204,20 +202,17 @@ export class GetQuestionsFeedbackDto extends UpdateQuestionsFeedbackDto {
 //#User Assessment Template
 export class CreateUserInterviewTemplateDto implements UserInterviewTemplateInterface {
 
-  @IsString()
+  @IsMongoId()
   userId: User;
 
-  @IsString()
+  @IsMongoId()
   domainId: MasterDataId;
 
-  @IsString()
+  @IsMongoId()
   assessmentId: MasterDataId;
 
-  @IsObject()
-  sectionDetails: SectionDetails;
-
   @IsArray()
-  questionsPerSection: QuestionsPerSections[];
+  questionsPerSection: [QuestionsPerSections];
   
   @IsString()
   @IsOptional()

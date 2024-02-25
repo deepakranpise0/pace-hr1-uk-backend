@@ -17,35 +17,45 @@ import { UserInterviewTemplateInterface } from '../_types/Types';
 
 @Injectable()
 export class UserInterviewTemplateService {
+   populateArray=[
+     { path: 'userId', select: 'name email' }, 
+     { path: 'domainId', select: 'name' },
+     { path: 'assessmentId', select: 'name' },
+     { path: 'questionsPerSection.sectionId', select: 'name' },
+     { path: 'questionsPerSection.questionId.questionId', select: 'questions description' },
+     { path: 'questionsPerSection.questionId.indicator', select: 'indicatorValue name' }
+   ]
+  
   constructor(
     @Inject('USER_INTERVIEW_TEMPLATE_MODEL')
     private readonly _UserInterviewTemplateModel: Model<UserInterviewTemplateInterface>
   ) { }
   
-  async createQuestionData(CreateUserInterviewTemplateDto: CreateUserInterviewTemplateDto): Promise<GetUserInterviewTemplateDto> {
-    const createQuestionData = await this._UserInterviewTemplateModel.create(CreateUserInterviewTemplateDto);
-    if (!createQuestionData) {
+  async create(CreateUserInterviewTemplateDto: CreateUserInterviewTemplateDto): Promise<GetUserInterviewTemplateDto> {
+    const createUserInterviewTemplate = await this._UserInterviewTemplateModel.create(CreateUserInterviewTemplateDto);
+    if (!createUserInterviewTemplate) {
       throw new HttpException(
         'Error creating user interview template data.',
         HttpStatus.BAD_REQUEST
       );
     }
-    return createQuestionData;
+    return createUserInterviewTemplate;
   }
   
   async findAll(query: any) {
     const params = [];
     const data = await this.selectQuery(query, params);
 
-    const findAllQuestionData = await this._UserInterviewTemplateModel
+    const findAllUserInterviewTemplate = await this._UserInterviewTemplateModel
       .find(data.findParams, data.projectParams, data.queryOptions)
+      .populate(this.populateArray)
       .lean()
       .skip(parseInt(query.skip, 10) || 0)
       .limit(parseInt(query.limit, 10) || 0);
-    if (!findAllQuestionData) {
+    if (!findAllUserInterviewTemplate) {
       throw new HttpException('User interview template data not found.', HttpStatus.NOT_FOUND);
     }
-    return findAllQuestionData;
+    return findAllUserInterviewTemplate;
   }
 
   async findOne(id: string) {
@@ -54,6 +64,7 @@ export class UserInterviewTemplateService {
         _id: new mongoose.Types.ObjectId(id),
         isDeleted: false,
       })
+      .populate(this.populateArray)
       .lean();
     if (!findOneUserInterviewTemplate) {
       throw new HttpException('User interview template data not found.', HttpStatus.NOT_FOUND);
@@ -66,10 +77,9 @@ export class UserInterviewTemplateService {
     if (!findData) {
       throw new HttpException('User interview template data not found.', HttpStatus.NOT_FOUND);
     } else {
-      let { isActive, updatedAt, domainId, assessmentId, sectionDetails, questionsPerSection, overallFeedback, pdfUrlLink, } = UpdateUserInterviewTemplateDto;
+      let { isActive, updatedAt, domainId, assessmentId, questionsPerSection, overallFeedback, pdfUrlLink, } = UpdateUserInterviewTemplateDto;
       domainId = domainId ? domainId : findData.domainId;
       assessmentId = assessmentId ? assessmentId : findData.assessmentId;
-      sectionDetails = sectionDetails ? sectionDetails : findData.sectionDetails;
       questionsPerSection = questionsPerSection ? questionsPerSection : findData.questionsPerSection;
       overallFeedback = overallFeedback ? overallFeedback : findData.overallFeedback;
       pdfUrlLink = pdfUrlLink ? pdfUrlLink : findData.pdfUrlLink;

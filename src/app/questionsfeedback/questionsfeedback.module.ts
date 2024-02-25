@@ -16,7 +16,7 @@ import { QuestionsFeedbackService } from './questionsfeedback.service';
       {
         provide: 'QUESTIONS_FEEDBACK_MODEL',
         useFactory: (mongoose: Mongoose) =>
-          mongoose.model('QuestionFeedbacks', QuestionsFeedbackDataSchema),
+          mongoose.model('questionfeedbacks', QuestionsFeedbackDataSchema),
         inject: ['DATABASE_CONNECTION'],
       },
     ]

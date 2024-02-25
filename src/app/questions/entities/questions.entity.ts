@@ -15,13 +15,13 @@ export type RuleDocument = QuestionsData & mongoose.Document;
 
 @Schema()
 export class QuestionsData implements QuestionInterface {
-    @Prop()
+  @Prop({required:true})
     questions: string;
 
     @Prop()
     description: string;
 
-    @Prop({type:mongoose.Schema.Types.ObjectId})  
+    @Prop({type:mongoose.Schema.Types.ObjectId,required:true})  
     sectionId: MasterDataId;
 
     @Prop({ default: true })
