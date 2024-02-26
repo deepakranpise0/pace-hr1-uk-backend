@@ -21,7 +21,7 @@ export class QuestionsData implements QuestionInterface {
     @Prop()
     description: string;
 
-    @Prop({type:mongoose.Schema.Types.ObjectId,required:true})  
+  @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'masterdatas' ,required:true})  
     sectionId: MasterDataId;
 
     @Prop({ default: true })

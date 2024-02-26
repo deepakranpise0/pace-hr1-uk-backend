@@ -17,6 +17,8 @@ import { QuestionInterface } from '../_types/Types';
 
 @Injectable()
 export class QuestionsService {
+    populateArray = [{ path: 'sectionId', select: 'name' }];
+
   constructor(
     @Inject('QUESTIONS_MODEL')
     private readonly QuestionModel: Model<QuestionInterface>
@@ -34,12 +36,12 @@ export class QuestionsService {
   }
   
   async findAll(query: any) {
-    console.log("Question Data")
     const params = [];
     const data = await this.selectQuery(query, params);
 
     const findAllQuestionData = await this.QuestionModel
       .find(data.findParams, data.projectParams, data.queryOptions)
+      .populate(this.populateArray)
       .lean()
       .skip(parseInt(query.skip, 10) || 0)
       .limit(parseInt(query.limit, 10) || 0);
@@ -55,6 +57,7 @@ export class QuestionsService {
         _id: new mongoose.Types.ObjectId(id),
         isDeleted: false,
       })
+      .populate(this.populateArray)
       .lean();
     if (!findOneDeviceType) {
       throw new HttpException('Question data not found.', HttpStatus.NOT_FOUND);
