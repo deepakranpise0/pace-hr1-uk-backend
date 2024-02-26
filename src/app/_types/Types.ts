@@ -69,7 +69,7 @@ export declare interface PaceEmployeeInterface{
 
 export declare interface QuestionInterface{
     _id?:mongoose.Types.ObjectId
-    questions: string;
+    name: string;
     description?: string;
     sectionId: MasterDataId,
     isActive: boolean;

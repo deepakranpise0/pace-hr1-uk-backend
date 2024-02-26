@@ -119,7 +119,7 @@ export class CreateQuestionsDto implements QuestionInterface {
   sectionId: MasterDataId;
   
   @IsString()
-  questions: string;
+  name: string;
 
   @IsString()
   @IsOptional()

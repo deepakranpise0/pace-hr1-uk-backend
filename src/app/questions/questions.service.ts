@@ -70,9 +70,9 @@ export class QuestionsService {
     if (!findData) {
       throw new HttpException('Question data not found.', HttpStatus.NOT_FOUND);
     } else {
-        let { sectionId, questions, isActive, updatedAt, description } = updateQuestionsDto;
+        let { sectionId, name, isActive, updatedAt, description } = updateQuestionsDto;
         sectionId = sectionId ? sectionId : findData.sectionId;
-        questions = questions ? questions : findData.questions
+        name = name ? name : findData.name
         description = description ? description : findData.description
         isActive = isActive ? isActive : findData.isActive;
         updatedAt = moment().toISOString();

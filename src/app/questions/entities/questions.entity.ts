@@ -16,31 +16,31 @@ export type RuleDocument = QuestionsData & mongoose.Document;
 @Schema()
 export class QuestionsData implements QuestionInterface {
   @Prop({required:true})
-    questions: string;
+  name: string;
 
-    @Prop()
-    description: string;
+  @Prop()
+  description: string;
 
   @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'masterdatas' ,required:true})  
-    sectionId: MasterDataId;
+  sectionId: MasterDataId;
 
-    @Prop({ default: true })
-    isActive: boolean;
+  @Prop({ default: true })
+  isActive: boolean;
 
-    @Prop({ default: moment().toISOString() })
-    createdAt: string;
+  @Prop({ default: moment().toISOString() })
+  createdAt: string;
 
-    @Prop({ default: moment().toISOString() })
-    updatedAt: string;
+  @Prop({ default: moment().toISOString() })
+  updatedAt: string;
 
-    @Prop({ default: false })
-    isDeleted: boolean;
+  @Prop({ default: false })
+  isDeleted: boolean;
 
-    @Prop()
-    createdBy: string;
+  @Prop()
+  createdBy: string;
 
-    @Prop()
-    updatedBy: string;
+  @Prop()
+  updatedBy: string;
 }
 
 export const QuestionSchema = SchemaFactory.createForClass(QuestionsData);
