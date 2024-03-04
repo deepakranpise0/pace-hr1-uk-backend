@@ -18,7 +18,6 @@ import { InterviewTemplateInterface } from '../_types/Types';
 @Injectable()
 export class InterviewTemplateService {
    populateArray=[
-     { path: 'userId', select: 'name email' }, 
      { path: 'domainId', select: 'name' },
      { path: 'assessmentId', select: 'name' },
      { path: 'questionsPerSection.sectionId', select: 'name' },
