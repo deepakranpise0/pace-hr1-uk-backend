@@ -101,14 +101,14 @@ export declare interface User {
   type: { type: mongoose.Schema.Types.ObjectId; ref: 'Users' };
 }
 
-export declare interface UserInterviewTemplateInterface{
-    _id?:mongoose.Types.ObjectId
-    userId: User;
+export declare interface InterviewTemplateInterface{
+    _id?: mongoose.Types.ObjectId,
+    templateName:string,
     domainId: MasterDataId;
     assessmentId: MasterDataId,
     questionsPerSection: [QuestionsPerSections],
-    overallFeedback: string,
-    pdfUrlLink: string,
+    // overallFeedback: string,
+    // pdfUrlLink: string,
     isActive: boolean;
     isDeleted: boolean;
     createdAt: string;

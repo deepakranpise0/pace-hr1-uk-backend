@@ -10,6 +10,7 @@ import {
 import mongoose from 'mongoose';
 
 import {
+  InterviewTemplateInterface,
   MASTER_DATA,
   MasterDataId,
   masterDataInterface,
@@ -19,9 +20,7 @@ import {
   QuestionInterface,
   QuestionsPerSections,
   ROLE,
-  User,
   UserInterface,
-  UserInterviewTemplateInterface,
 } from '../_types/Types';
 import { IsMongoId } from './Constraints';
 
@@ -200,10 +199,10 @@ export class GetQuestionsFeedbackDto extends UpdateQuestionsFeedbackDto {
 //#endregion
 
 //#User Assessment Template
-export class CreateUserInterviewTemplateDto implements UserInterviewTemplateInterface {
+export class CreateInterviewTemplateDto implements InterviewTemplateInterface {
 
-  @IsMongoId()
-  userId: User;
+  @IsString()
+  templateName: string;
 
   @IsMongoId()
   domainId: MasterDataId;
@@ -213,14 +212,6 @@ export class CreateUserInterviewTemplateDto implements UserInterviewTemplateInte
 
   @IsArray()
   questionsPerSection: [QuestionsPerSections];
-  
-  @IsString()
-  @IsOptional()
-  overallFeedback: string;
-  
-  @IsString()
-  @IsOptional()
-  pdfUrlLink: string;
 
   @IsBoolean()
   @IsOptional()
@@ -242,11 +233,11 @@ export class CreateUserInterviewTemplateDto implements UserInterviewTemplateInte
   @IsOptional()
   updatedBy: string;
 }
-export class UpdateUserInterviewTemplateDto extends CreateUserInterviewTemplateDto implements UserInterviewTemplateInterface {  
+export class UpdateInterviewTemplateDto extends CreateInterviewTemplateDto implements InterviewTemplateInterface {  
   @IsOptional()
   updatedAt:  string;
 }
-export class GetUserInterviewTemplateDto extends UpdateUserInterviewTemplateDto { 
+export class GetInterviewTemplateDto extends UpdateInterviewTemplateDto { 
   _id?: mongoose.Types.ObjectId
 }
 //#EndRegion

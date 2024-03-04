@@ -9,14 +9,14 @@ import {
 } from '@nestjs/common';
 
 import {
-  CreateUserInterviewTemplateDto,
-  GetUserInterviewTemplateDto,
-  UpdateUserInterviewTemplateDto,
+  CreateInterviewTemplateDto,
+  GetInterviewTemplateDto,
+  UpdateInterviewTemplateDto,
 } from '../_dtos/Dtos';
-import { UserInterviewTemplateInterface } from '../_types/Types';
+import { InterviewTemplateInterface } from '../_types/Types';
 
 @Injectable()
-export class UserInterviewTemplateService {
+export class InterviewTemplateService {
    populateArray=[
      { path: 'userId', select: 'name email' }, 
      { path: 'domainId', select: 'name' },
@@ -27,70 +27,69 @@ export class UserInterviewTemplateService {
    ]
   
   constructor(
-    @Inject('USER_INTERVIEW_TEMPLATE_MODEL')
-    private readonly _UserInterviewTemplateModel: Model<UserInterviewTemplateInterface>
+    @Inject('INTERVIEW_TEMPLATE_MODEL')
+    private readonly _InterviewTemplateModel: Model<InterviewTemplateInterface>
   ) { }
   
-  async create(CreateUserInterviewTemplateDto: CreateUserInterviewTemplateDto): Promise<GetUserInterviewTemplateDto> {
-    const createUserInterviewTemplate = await this._UserInterviewTemplateModel.create(CreateUserInterviewTemplateDto);
-    if (!createUserInterviewTemplate) {
+  async create(CreateInterviewTemplateDto: CreateInterviewTemplateDto): Promise<GetInterviewTemplateDto> {
+    const createInterviewTemplate = await this._InterviewTemplateModel.create(CreateInterviewTemplateDto);
+    if (!createInterviewTemplate) {
       throw new HttpException(
         'Error creating user interview template data.',
         HttpStatus.BAD_REQUEST
       );
     }
-    return createUserInterviewTemplate;
+    return createInterviewTemplate;
   }
   
   async findAll(query: any) {
     const params = [];
     const data = await this.selectQuery(query, params);
 
-    const findAllUserInterviewTemplate = await this._UserInterviewTemplateModel
+    const findAllInterviewTemplate = await this._InterviewTemplateModel
       .find(data.findParams, data.projectParams, data.queryOptions)
       .populate(this.populateArray)
       .lean()
       .skip(parseInt(query.skip, 10) || 0)
       .limit(parseInt(query.limit, 10) || 0);
-    if (!findAllUserInterviewTemplate) {
+    if (!findAllInterviewTemplate) {
       throw new HttpException('User interview template data not found.', HttpStatus.NOT_FOUND);
     }
-    return findAllUserInterviewTemplate;
+    return findAllInterviewTemplate;
   }
 
   async findOne(id: string) {
-    const findOneUserInterviewTemplate = await this._UserInterviewTemplateModel
+    const findOneInterviewTemplate = await this._InterviewTemplateModel
       .findOne({
         _id: new mongoose.Types.ObjectId(id),
         isDeleted: false,
       })
       .populate(this.populateArray)
       .lean();
-    if (!findOneUserInterviewTemplate) {
+    if (!findOneInterviewTemplate) {
       throw new HttpException('User interview template data not found.', HttpStatus.NOT_FOUND);
     }
-    return findOneUserInterviewTemplate;
+    return findOneInterviewTemplate;
   }
 
-  async update(id: string, UpdateUserInterviewTemplateDto: UpdateUserInterviewTemplateDto) {
+  async update(id: string, UpdateInterviewTemplateDto: UpdateInterviewTemplateDto) {
     const findData = await this.findOne(id);
     if (!findData) {
       throw new HttpException('User interview template data not found.', HttpStatus.NOT_FOUND);
     } else {
-      let { isActive, updatedAt, domainId, assessmentId, questionsPerSection, overallFeedback, pdfUrlLink, } = UpdateUserInterviewTemplateDto;
+      let { isActive, templateName,updatedAt, domainId, assessmentId, questionsPerSection } = UpdateInterviewTemplateDto;
+      templateName = templateName ? templateName : findData.templateName;
       domainId = domainId ? domainId : findData.domainId;
       assessmentId = assessmentId ? assessmentId : findData.assessmentId;
       questionsPerSection = questionsPerSection ? questionsPerSection : findData.questionsPerSection;
-      overallFeedback = overallFeedback ? overallFeedback : findData.overallFeedback;
-      pdfUrlLink = pdfUrlLink ? pdfUrlLink : findData.pdfUrlLink;
       isActive = isActive ? isActive : findData.isActive;
       updatedAt = moment().toISOString();
-      const updatedUserInterviewTemplate = await this._UserInterviewTemplateModel.updateOne(
+      const updatedInterviewTemplate = await this._InterviewTemplateModel.updateOne(
           { _id: new mongoose.Types.ObjectId(id) },
-          UpdateUserInterviewTemplateDto
+          UpdateInterviewTemplateDto
       );
       
-      if (!updatedUserInterviewTemplate) {
+      if (!updatedInterviewTemplate) {
           throw new HttpException(
           'User interview template data update failed.',
           HttpStatus.BAD_REQUEST
@@ -102,11 +101,11 @@ export class UserInterviewTemplateService {
   }
 
   async remove(id: string) {
-    const removeUserInterviewTemplate = await this._UserInterviewTemplateModel.updateOne(
+    const removeInterviewTemplate = await this._InterviewTemplateModel.updateOne(
       { _id: new mongoose.Types.ObjectId(id) },
       { isDeleted: true }
     );
-    if (!removeUserInterviewTemplate) {
+    if (!removeInterviewTemplate) {
       throw new HttpException(
         'User interview template data deletion failed.',
         HttpStatus.BAD_REQUEST

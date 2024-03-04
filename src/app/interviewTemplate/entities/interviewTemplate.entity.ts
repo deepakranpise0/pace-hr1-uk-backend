@@ -1,10 +1,9 @@
 import moment from 'moment';
 import * as mongoose from 'mongoose';
 import {
+  InterviewTemplateInterface,
   MasterDataId,
   QuestionsPerSections,
-  User,
-  UserInterviewTemplateInterface,
 } from 'src/app/_types/Types';
 
 import {
@@ -13,12 +12,12 @@ import {
   SchemaFactory,
 } from '@nestjs/mongoose';
 
-export type RuleDocument = UserInterviewTemplate & mongoose.Document;
+export type RuleDocument = InterviewTemplate & mongoose.Document;
 
 @Schema()
-export class UserInterviewTemplate implements UserInterviewTemplateInterface {
-  @Prop({type:mongoose.Schema.Types.ObjectId,ref: 'users',required:true}) 
-  userId: User;
+export class InterviewTemplate implements InterviewTemplateInterface {
+  @Prop({type:String,required:true}) 
+  templateName:string ;
 
   @Prop({type:mongoose.Schema.Types.ObjectId,ref: 'masterdatas',required:true})  
   domainId: MasterDataId;
@@ -36,12 +35,6 @@ export class UserInterviewTemplate implements UserInterviewTemplateInterface {
       notes:String
     }],required:true })
   questionsPerSection: [QuestionsPerSections];
-
-  @Prop()
-  overallFeedback: string;
-
-  @Prop()
-  pdfUrlLink: string;
 
   @Prop({ default: true })
   isActive: boolean;
@@ -62,4 +55,4 @@ export class UserInterviewTemplate implements UserInterviewTemplateInterface {
   updatedBy: string;
 }
 
-export const UserInterviewTemplateSchema = SchemaFactory.createForClass(UserInterviewTemplate);
+export const InterviewTemplateSchema = SchemaFactory.createForClass(InterviewTemplate);
