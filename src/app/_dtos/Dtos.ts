@@ -10,6 +10,7 @@ import {
 import mongoose from 'mongoose';
 
 import {
+  InterviewResponseInterface,
   InterviewTemplateInterface,
   MASTER_DATA,
   MasterDataId,
@@ -288,7 +289,50 @@ export class UpdatePaceEmployeeDto extends CreatePaceEmployeeDto implements Pace
 export class GetPaceEmployeeDto extends UpdatePaceEmployeeDto { 
   _id?: mongoose.Types.ObjectId
 }
-//#endregion  
+//#endregion
+
+//#User Interview Template
+export class CreateInterviewResponseDto implements InterviewResponseInterface {
+  @IsMongoId()
+  userId: mongoose.Types.ObjectId;
+
+  @IsMongoId()
+  templateId: mongoose.Types.ObjectId;
+  
+  @IsString()
+  pdfUrlLink: string;
+
+  @IsArray()
+  questionsPerSection: [QuestionsPerSections];
+
+  @IsBoolean()
+  @IsOptional()
+  isActive: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  isDeleted: boolean;
+
+  @IsOptional()
+  createdAt: string;
+
+  @IsOptional()
+  createdBy: string;
+
+  @IsOptional()
+  updatedAt: string;
+  
+  @IsOptional()
+  updatedBy: string;
+}
+export class UpdateInterviewResponseDto extends CreateInterviewResponseDto implements InterviewResponseInterface {  
+  @IsOptional()
+  updatedAt:  string;
+}
+export class GetInterviewResponseDto extends UpdateInterviewResponseDto { 
+  _id?: mongoose.Types.ObjectId
+}
+//#EndRegion
 
 
 

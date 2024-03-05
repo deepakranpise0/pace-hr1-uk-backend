@@ -117,6 +117,20 @@ export declare interface InterviewTemplateInterface{
     updatedBy: string;
 }
 
+export declare interface InterviewResponseInterface{
+    _id?: mongoose.Types.ObjectId,
+    userId:mongoose.Types.ObjectId,
+    templateId:mongoose.Types.ObjectId,
+    questionsPerSection: [QuestionsPerSections],
+    pdfUrlLink: string,
+    isActive: boolean;
+    isDeleted: boolean;
+    createdAt: string;
+    createdBy: string;
+    updatedAt: string;
+    updatedBy: string;
+}
+
 
 
 
