@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose';
 import {
   InterviewTemplateInterface,
   MasterDataId,
-  QuestionsPerSections,
+  QuestionsPerSectionForTemplate,
 } from 'src/app/_types/Types';
 
 import {
@@ -28,13 +28,9 @@ export class InterviewTemplate implements InterviewTemplateInterface {
   @Prop({
     type: [{
       sectionId: { type: mongoose.Schema.Types.ObjectId,ref: 'masterdatas'},
-      questionId: [{
-        questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'questions' },
-        indicator: { type: mongoose.Schema.Types.ObjectId, ref: 'masterdatas' }
-      }],
-      notes:String
+      questionId: [ { type: mongoose.Schema.Types.ObjectId, ref: 'questions' }]
     }],required:true })
-  questionsPerSection: [QuestionsPerSections];
+  questionsPerSection: [QuestionsPerSectionForTemplate];
 
   @Prop({ default: true })
   isActive: boolean;

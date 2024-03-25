@@ -7,11 +7,10 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtConfigModule } from './jwt.config';
 import { JwtStrategy } from './jwtStrategy';
-import { LocalStrategy } from './localStrategy';
 
 @Module({
-    imports: [DatabaseModule,PaceEmployeeModule,JwtConfigModule],
-    controllers: [AuthController],
-    providers: [AuthService,JwtService,JwtStrategy, LocalStrategy]
+  imports: [DatabaseModule, PaceEmployeeModule, JwtConfigModule],
+  controllers: [AuthController],
+  providers: [AuthService, JwtService, JwtStrategy],
 })
 export class AuthModule {}

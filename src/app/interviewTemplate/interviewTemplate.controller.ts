@@ -15,10 +15,10 @@ import {
   GetInterviewTemplateDto,
   UpdateInterviewTemplateDto,
 } from '../_dtos/Dtos';
-import { JwtAuthGuard } from '../auth/auth.guard';
+import { FirebaseAuthGuard } from '../auth/firebase.guard';
 import { InterviewTemplateService } from './interviewTemplate.service';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(FirebaseAuthGuard)
 @Controller('interviewTemplates')
 export class InterviewTemplateController {
   constructor(private readonly _interviewTemplateService: InterviewTemplateService) { }

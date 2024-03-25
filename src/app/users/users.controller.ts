@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 import {
   Body,
   Controller,
@@ -15,10 +17,10 @@ import {
   GetUserDto,
   UpdateUserDto,
 } from '../_dtos/Dtos';
-import { JwtAuthGuard } from '../auth/auth.guard';
+import { FirebaseAuthGuard } from '../auth/firebase.guard';
 import { UserService } from './users.service';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(FirebaseAuthGuard)
 @Controller('users')
 export class UserController {
   constructor(private readonly _UserService: UserService) { }
@@ -34,20 +36,20 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string):Promise<GetUserDto> {
+  findOne(@Param('id') id: mongoose.Schema.Types.ObjectId):Promise<GetUserDto> {
     return this._UserService.findOne(id);
   }
 
   @Put(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') id: mongoose.Schema.Types.ObjectId,
     @Body() updateUserDto: UpdateUserDto
   ):Promise<String> {
     return this._UserService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string):Promise<String> {
+  remove(@Param('id') id: mongoose.Schema.Types.ObjectId):Promise<String> {
     return this._UserService.remove(id);
   }
 }

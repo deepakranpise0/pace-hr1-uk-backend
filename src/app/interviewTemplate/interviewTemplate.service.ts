@@ -21,8 +21,7 @@ export class InterviewTemplateService {
      { path: 'domainId', select: 'name' },
      { path: 'assessmentId', select: 'name' },
      { path: 'questionsPerSection.sectionId', select: 'name' },
-     { path: 'questionsPerSection.questionId.questionId', select: 'questions description' },
-     { path: 'questionsPerSection.questionId.indicator', select: 'indicatorValue name' }
+     { path: 'questionsPerSection.questionId', select: 'name description' },
    ]
   
   constructor(

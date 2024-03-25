@@ -3,17 +3,17 @@ import {
   TestingModule,
 } from '@nestjs/testing';
 
-import { InterviewTemplateController } from './interviewTemplate.controller';
+import { InterviewResponseController } from './interviewResponse.controller';
 
-describe('InterviewTemplateController', () => {
-  let controller: InterviewTemplateController;
+describe('InterviewResponseController', () => {
+  let controller: InterviewResponseController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [InterviewTemplateController],
+      controllers: [InterviewResponseController],
     }).compile();
 
-    controller = module.get<InterviewTemplateController>(InterviewTemplateController);
+    controller = module.get<InterviewResponseController>(InterviewResponseController);
   });
 
   it('should be defined', () => {

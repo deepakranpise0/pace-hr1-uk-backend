@@ -15,10 +15,10 @@ import {
   GetMasterDto,
   UpdateMasterDto,
 } from '../_dtos/Dtos';
-import { JwtAuthGuard } from '../auth/auth.guard';
+import { FirebaseAuthGuard } from '../auth/firebase.guard';
 import { MasterService } from './masterdata.service';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(FirebaseAuthGuard)
 @Controller('masters')
 export class MasterController {
     constructor(private readonly _masterService: MasterService) {}

@@ -18,9 +18,9 @@ export class InterviewResponse implements InterviewResponseInterface {
 
  
   @Prop({type:mongoose.Schema.Types.ObjectId,ref: 'users',required:true}) 
-  userId:mongoose.Types.ObjectId ;
+  userId:mongoose.Schema.Types.ObjectId ;
 
-  @Prop({type:mongoose.Schema.Types.ObjectId,ref: 'interviewTemplate',required:true})  
+  @Prop({type:mongoose.Schema.Types.ObjectId,ref: 'interviewTemplates',required:true})  
   templateId: mongoose.Types.ObjectId;
 
   @Prop()  
@@ -29,8 +29,9 @@ export class InterviewResponse implements InterviewResponseInterface {
   @Prop({
     type: [{
       sectionId: { type: mongoose.Schema.Types.ObjectId,ref: 'masterdatas'},
-      questions: [{
-        questionId: { type: mongoose.Schema.Types.ObjectId, ref: 'questions' },
+      questionId: [{
+        low: String,
+        high: { type: mongoose.Schema.Types.ObjectId,ref: 'questions'},
         indicator: { type: mongoose.Schema.Types.ObjectId, ref: 'masterdatas' }
       }],
       notes:String

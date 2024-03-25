@@ -15,10 +15,10 @@ import {
   GetQuestionsFeedbackDto,
   UpdateQuestionsFeedbackDto,
 } from '../_dtos/Dtos';
-import { JwtAuthGuard } from '../auth/auth.guard';
+import { FirebaseAuthGuard } from '../auth/firebase.guard';
 import { QuestionsFeedbackService } from './questionsfeedback.service';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(FirebaseAuthGuard)
 @Controller('questionsFeedback')
 export class QuestionsFeedbackController {
   constructor(private readonly _QuestionFeedbackService: QuestionsFeedbackService) { }

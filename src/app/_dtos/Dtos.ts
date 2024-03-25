@@ -19,6 +19,7 @@ import {
   Question,
   QuestionFeedbackInterface,
   QuestionInterface,
+  QuestionsPerSectionForTemplate,
   QuestionsPerSections,
   ROLE,
   UserInterface,
@@ -212,7 +213,7 @@ export class CreateInterviewTemplateDto implements InterviewTemplateInterface {
   assessmentId: MasterDataId;
 
   @IsArray()
-  questionsPerSection: [QuestionsPerSections];
+  questionsPerSection: [QuestionsPerSectionForTemplate];
 
   @IsBoolean()
   @IsOptional()
@@ -294,12 +295,13 @@ export class GetPaceEmployeeDto extends UpdatePaceEmployeeDto {
 //#User Interview Template
 export class CreateInterviewResponseDto implements InterviewResponseInterface {
   @IsMongoId()
-  userId: mongoose.Types.ObjectId;
+  userId: mongoose.Schema.Types.ObjectId;
 
   @IsMongoId()
   templateId: mongoose.Types.ObjectId;
   
   @IsString()
+  @IsOptional()
   pdfUrlLink: string;
 
   @IsArray()

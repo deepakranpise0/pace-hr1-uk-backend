@@ -34,6 +34,7 @@ export class UserService {
   }
   
   async findAll(query: any) {
+    console.log(query);
     const params = ['name','email'];
     const data = await this.selectQuery(query, params);
 
@@ -48,10 +49,10 @@ export class UserService {
     return findAllUserData;
   }
 
-  async findOne(id: string) {
+  async findOne(id: mongoose.Schema.Types.ObjectId) {
     const findOneDeviceType = await this.userModel
       .findOne({
-        _id: new mongoose.Types.ObjectId(id),
+        _id: id,
         isDeleted: false,
       })
       .lean();
@@ -61,7 +62,7 @@ export class UserService {
     return findOneDeviceType;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: mongoose.Schema.Types.ObjectId, updateUserDto: UpdateUserDto) {
     const findData = await this.findOne(id);
     if (!findData) {
       throw new HttpException('User data not found.', HttpStatus.NOT_FOUND);
@@ -73,7 +74,7 @@ export class UserService {
       updatedAt = moment().toISOString();
 
       const updatedDeviceType = await this.userModel.updateOne(
-        { _id: new mongoose.Types.ObjectId(id) },
+        { _id: id },
         updateUserDto
       );
       if (!updatedDeviceType) {
@@ -87,9 +88,9 @@ export class UserService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: mongoose.Schema.Types.ObjectId) {
     const removeDeviceType = await this.userModel.updateOne(
-      { _id: new mongoose.Types.ObjectId(id) },
+      { _id: id },
       { isDeleted: true }
     );
     if (!removeDeviceType) {
@@ -108,7 +109,7 @@ export class UserService {
       projectParams[param] = 1;
     });
     const query = {
-      findParams: {},
+      findParams: {isDeleted:false},
       projectParams,
       queryOptions: {},
     };
@@ -127,16 +128,14 @@ export class UserService {
           }
           new_query.push(NewSubQuery);
         });
-        query.findParams = { $or: new_query };
+        query.findParams['$or'] = new_query;
       } else {
         const searchQuery = {};
         params.forEach((param) => {
           if (param !== 'isActive')
             searchQuery[param] = { $regex: data.search, $options: 'i' };
         });
-        query.findParams = {
-          $or: [searchQuery],
-        };
+        query.findParams['$or'] = [searchQuery]
       }
     }
     if (data && data.sortBy) {
@@ -146,6 +145,7 @@ export class UserService {
       query.queryOptions = { sort: value };
     }
     // query.findParams={ isActive:true };
+    console.log(query);
     return query;
   }
 }

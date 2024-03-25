@@ -34,7 +34,7 @@ export class MasterService {
   }
   
   async findAll(query: any) {
-    const params = ['masterDataType','name','description','isActive'];
+    const params = ['masterDataType','name','description','isActive','indicatorValue'];
     const data = await this.selectQuery(query, params);
 
     const findAllMasterData = await this.masterDataModel
@@ -88,9 +88,8 @@ export class MasterService {
   }
 
   async remove(id: string) {
-    const removeDeviceType = await this.masterDataModel.updateOne(
+    const removeDeviceType = await this.masterDataModel.deleteOne(
       { _id: new mongoose.Types.ObjectId(id) },
-      { isDeleted: true }
     );
     if (!removeDeviceType) {
       throw new HttpException(
@@ -122,7 +121,9 @@ export class MasterService {
           if (e.includes('_id')) {
             NewSubQuery[e] = new mongoose.Types.ObjectId(data.search);
           } else if (e !== 'isActive') {
-            NewSubQuery[e] = { $regex: data.search, $options: 'i' };
+            if ((e !== 'indicatorValue')) {
+              NewSubQuery[e] = { $regex: data.search, $options: 'i' };
+            }
           }
           new_query.push(NewSubQuery);
         });
@@ -131,9 +132,11 @@ export class MasterService {
         const mainQuery=[]
         params.forEach((param) => {
           let searchQuery={}
-          if (param !== 'isActive') {
-            searchQuery[param] = { $regex: data.search, $options: 'i' };
-            mainQuery.push(searchQuery);
+          if ((param !== 'isActive')) {
+            if ((param !== 'indicatorValue')) {
+              searchQuery[param] = { $regex: data.search, $options: 'i' };
+              mainQuery.push(searchQuery);    
+            }
           }
         });
         query.findParams = {

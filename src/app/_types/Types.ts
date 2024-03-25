@@ -18,9 +18,15 @@ export type QuestionsPerSections = {
     notes:string
 }
 
-export type Questions={
-    questionId: MasterDataId,
-    indicator: MasterDataId, 
+export type QuestionsPerSectionForTemplate = {
+    sectionId:MasterDataId
+    questionId: [Question]
+}
+
+export type Questions = {
+    low:string,
+    indicator: MasterDataId,
+    high: Question, 
 }
 
 export declare interface masterDataInterface{
@@ -106,9 +112,7 @@ export declare interface InterviewTemplateInterface{
     templateName:string,
     domainId: MasterDataId;
     assessmentId: MasterDataId,
-    questionsPerSection: [QuestionsPerSections],
-    // overallFeedback: string,
-    // pdfUrlLink: string,
+    questionsPerSection: [QuestionsPerSectionForTemplate],
     isActive: boolean;
     isDeleted: boolean;
     createdAt: string;
@@ -119,7 +123,7 @@ export declare interface InterviewTemplateInterface{
 
 export declare interface InterviewResponseInterface{
     _id?: mongoose.Types.ObjectId,
-    userId:mongoose.Types.ObjectId,
+    userId:mongoose.Schema.Types.ObjectId,
     templateId:mongoose.Types.ObjectId,
     questionsPerSection: [QuestionsPerSections],
     pdfUrlLink: string,

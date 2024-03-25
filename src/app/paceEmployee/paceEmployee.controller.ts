@@ -15,10 +15,10 @@ import {
   GetPaceEmployeeDto,
   UpdatePaceEmployeeDto,
 } from '../_dtos/Dtos';
-import { JwtAuthGuard } from '../auth/auth.guard';
+import { FirebaseAuthGuard } from '../auth/firebase.guard';
 import { PaceEmployeeService } from './paceEmployee.service';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(FirebaseAuthGuard)
 @Controller('paceemployees')
 export class PaceEmployeeController {
   constructor(private readonly _PaceEmployeeService: PaceEmployeeService) { }
