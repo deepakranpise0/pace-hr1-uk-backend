@@ -236,25 +236,22 @@ async generatePdf(id:mongoose.Schema.Types.ObjectId,res) {
           'This PACE report is intended to provide you with an overview of your performance at the Development Centre against each of the practical assessment centre exercises. It is important to pay particular attention to those areas where you have demonstrated your strengths as well as considering areas for development. Performing well in Assessment Centres is as much about playing to our strengths as it is in developing our weaker areas.'
         )
         .moveDown(0.5)
+        //Overview
         .font('Courier-Bold')
         .text('Overview of Development Centre Exercises')
         .moveDown(1)
+        // Selected Section Information: 1
         .font('Courier-Bold')
         .text('Interview Exercise')
         .moveDown(0.5)
         .font('Courier')
         .text(
-          'In this exercise we will look at a number of Motivational fit questions, followed by a competency-based question, and finally a strength-based interview question.'
+          `In this exercise we will look at a number of Motivational fit questions, followed by a competency-based question, and finally a strength-based interview question.
+          Strength Based questions look at a combination of what people are good at and what they enjoy doing. It focuses on specific areas which motivate, naturally enthuse and excite candidates.
+          Questions have been designed in relation to some of the strengths which are most heavily linked to success in the role you are applying for. We will look at your reasons and motivation for your application. As well as your ability to make informed decisions based on analysis and problem solving, including how you adapt to changing circumstances. Throughout the exercise you will be assessed by your Peers.`
         )
         .moveDown(0.5)
-        .text(
-          'Strength Based questions look at a combination of what people are good at and what they enjoy doing. It focuses on specific areas which motivate, naturally enthuse and excite candidates.'
-        )
-        .moveDown(0.5)
-        .text(
-          'Questions have been designed in relation to some of the strengths which are most heavily linked to success in the role you are applying for. We will look at your reasons and motivation for your application. As well as your ability to make informed decisions based on analysis and problem solving, including how you adapt to changing circumstances. Throughout the exercise you will be assessed by your Peers.'
-        )
-        .moveDown(0.5)
+        //2
         .font('Courier-Bold')
         .text('Group Exercise')
         .moveDown(0.5)
@@ -263,6 +260,7 @@ async generatePdf(id:mongoose.Schema.Types.ObjectId,res) {
           'The group exercise looks at an inter-team discussion based on a hypothetical setting. You have recently joined a graduate scheme at Bentleys, a large retail organisation and have been asked to meet with a group of your colleagues to consider a number of issues and identify ways which will ultimately improve customer service.'
         )
         .moveDown(0.5)
+        //3
         .font('Courier-Bold')
         .text('Presentation Exercise')
         .moveDown(0.5)
@@ -271,6 +269,7 @@ async generatePdf(id:mongoose.Schema.Types.ObjectId,res) {
           'In this exercise, you were given 30 minutes preparation time in order to present your findings to the interview panel addressing their questions, around the challenges of COVID-19 after post lockdown and how the Government should respond to these challenges.'
         )
         .moveDown(0.5)
+        //Feedback: 1
         .fillColor('red')
         .font('Courier-Bold')
         .text('Interview Exercise Feedback')

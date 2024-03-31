@@ -22,11 +22,9 @@ export class InterviewTemplate implements InterviewTemplateInterface {
   @Prop({type:mongoose.Schema.Types.ObjectId,ref: 'masterdatas',required:true})  
   domainId: MasterDataId;
 
-  @Prop({type:mongoose.Schema.Types.ObjectId,ref: 'masterdatas',required:true})  
-  assessmentId: MasterDataId;
-
   @Prop({
     type: [{
+      assessmentId: { type: mongoose.Schema.Types.ObjectId,ref: 'masterdatas'},
       sectionId: { type: mongoose.Schema.Types.ObjectId,ref: 'masterdatas'},
       questionId: [ { type: mongoose.Schema.Types.ObjectId, ref: 'questions' }]
     }],required:true })

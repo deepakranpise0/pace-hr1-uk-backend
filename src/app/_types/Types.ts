@@ -19,6 +19,7 @@ export type QuestionsPerSections = {
 }
 
 export type QuestionsPerSectionForTemplate = {
+    assessmentId:MasterDataId,
     sectionId:MasterDataId
     questionId: [Question]
 }
@@ -111,7 +112,6 @@ export declare interface InterviewTemplateInterface{
     _id?: mongoose.Types.ObjectId,
     templateName:string,
     domainId: MasterDataId;
-    assessmentId: MasterDataId,
     questionsPerSection: [QuestionsPerSectionForTemplate],
     isActive: boolean;
     isDeleted: boolean;

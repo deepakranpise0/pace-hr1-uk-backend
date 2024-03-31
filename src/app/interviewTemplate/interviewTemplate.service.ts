@@ -19,7 +19,6 @@ import { InterviewTemplateInterface } from '../_types/Types';
 export class InterviewTemplateService {
    populateArray=[
      { path: 'domainId', select: 'name' },
-     { path: 'assessmentId', select: 'name' },
      { path: 'questionsPerSection.sectionId', select: 'name' },
      { path: 'questionsPerSection.questionId', select: 'name description' },
    ]
@@ -75,10 +74,9 @@ export class InterviewTemplateService {
     if (!findData) {
       throw new HttpException('User interview template data not found.', HttpStatus.NOT_FOUND);
     } else {
-      let { isActive, templateName,updatedAt, domainId, assessmentId, questionsPerSection } = UpdateInterviewTemplateDto;
+      let { isActive, templateName,updatedAt, domainId, questionsPerSection } = UpdateInterviewTemplateDto;
       templateName = templateName ? templateName : findData.templateName;
       domainId = domainId ? domainId : findData.domainId;
-      assessmentId = assessmentId ? assessmentId : findData.assessmentId;
       questionsPerSection = questionsPerSection ? questionsPerSection : findData.questionsPerSection;
       isActive = isActive ? isActive : findData.isActive;
       updatedAt = moment().toISOString();

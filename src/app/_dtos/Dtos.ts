@@ -209,9 +209,6 @@ export class CreateInterviewTemplateDto implements InterviewTemplateInterface {
   @IsMongoId()
   domainId: MasterDataId;
 
-  @IsMongoId()
-  assessmentId: MasterDataId;
-
   @IsArray()
   questionsPerSection: [QuestionsPerSectionForTemplate];
 
